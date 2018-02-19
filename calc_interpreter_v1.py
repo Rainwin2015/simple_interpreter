@@ -3,6 +3,12 @@
 # - the only arithmetic operation supported is addition.
 # - no whitespace characters are allowed anywhere in the input.
 
+# Example input :
+# 2+5
+
+# Output :
+# 7
+
 # Token types
 INTEGER, PLUS, EOF = 'INTEGER', 'PLUS', 'EOF'
 
@@ -60,19 +66,27 @@ class Interpreter(object):
         - if they match, then eat the current token;
         - otherwise, raise an exception
         """
+        # current token type meet expactation, advanced to the next token
         if self.current_token.type == token_type:
             self.current_token = self.get_next_token()
         else :
             self.error()
 
     def expr(self):
+        """Verify if the sequence of tokens does indeed correspond to the expacted sequence of tokens. i,e, "INTEGER -> PLUS -> INTEGER".
+
+        Uses helper method eat() to verify the token type passed to the eat method matches the current token type.
+        """
         self.current_token = self.get_next_token()
         left = self.current_token
+        # expacting an interger token
         self.eat(INTEGER)
 
+        # expacting an operator token
         op = self.current_token
         self.eat(PLUS)
 
+        #expacting an integer token
         right = self.current_token
         self.eat(INTEGER)
 
@@ -82,7 +96,7 @@ class Interpreter(object):
 def main():
     while True:
         try:
-            text = input('calc> ')
+            text = input('calc1> ')
         except EOFError:
             break
 
